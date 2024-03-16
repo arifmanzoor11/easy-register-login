@@ -1,0 +1,11 @@
+.esylogin_content {
+    display: none
+}
+
+a.esylogin_links {
+    padding: 10px 15px;
+    background: white;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 5px;
+}
