@@ -39,30 +39,24 @@ jQuery(document).ready(function () {
     jQuery("#reg-form").submit(function (e) {
         jQuery(".loading-img").show();
         e.preventDefault();
+        var Form_Data = jQuery("#reg-form").serialize();
+        // console.log(Form_Data);
+        // return;
         jQuery.ajax({
             url: my_ajax_object.ajax_url,
             type: "POST",
-            // dataType: 'json',
-            data: {
-                'action': 'register_user',
-            },
+            data: Form_Data + '&action=register_user',
             success: function (data) {
-                // console.log(data);
+               
                 var data_Success = jQuery.parseJSON(data);
-                if (data_Success.Success == '400') {
-                    // console.log(data_Success.Content);
-                    jQuery("#vote_counter").html(data_Success.Content);
-                    jQuery(".loading-img").hide();
-                    jQuery("#vote_counter").show().delay(7000).fadeOut();
-
-                } if (data_Success.Success == '200') {
-                    jQuery("#vote_counter").html(data_Success.Content);
-                    jQuery("#vote_counter").show().delay(5000).fadeOut();
-                    window.setTimeout('location.reload()', 3000);
-                    jQuery(".loading-img").hide();
-
+                if (data_Success.Code == '150') {
+                    jQuery("#reg-form").after("<div class='reg-loader'>"+ data_Success.Value +"</div>");
+                    jQuery(".reg-loader").show(1000).delay(5000).hide( "fast");
                 }
-                // jQuery("#vote_counter").html(data.Content);
+                if (data_Success.Code == '200') {
+                    jQuery("#reg-form").after("<div class='reg-loader' style='background:green'>"+ data_Success.Value +"</div>");
+                    jQuery(".reg-loader").show(1000).delay(10000).hide( "fast");
+                }
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText;

@@ -1,18 +1,14 @@
 <?php 
 include __DIR__ . '/includes/esy-login-isset.php';
-
 $my_wp_query = new WP_Query();
 $all_wp_pages = $my_wp_query->query(
     array(
         'post_type' => 'page',
         'posts_per_page' => -1
     )
-);
-?>
+); ?>
 <form action="" method="POST" style="margin-top:40px">
-    <h2>
-        <?php _e('Easy Login and Register Settings'); ?>
-    </h2>
+    <h2> <?php _e('Easy Login and Register Settings'); ?> </h2>
     <p>You can select the login and register page from here.</p>
 
     <div class="esylogin_tab">
@@ -50,7 +46,7 @@ $all_wp_pages = $my_wp_query->query(
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label>register_url Page</label>
+                        <label>Registration Page</label>
                     </th>
                     <td class="forminp forminp-text">
                         <select name="register_url" class="js-example-basic-single" style="min-width: 200px">

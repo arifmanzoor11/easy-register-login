@@ -15,7 +15,13 @@ $esylogin_output_btn = unserialize(get_option('esylogin_btn'));
 header("Content-type: text/css"); ?>
 
 /* profile menu */
-
+.reg-loader{position: fixed;
+    bottom: 20px;
+    background: black;
+    padding: 15px 20px;
+    color: white;
+    right: 20px;
+    border-radius: 5px;}
 .profile {
   position: relative;
     display: flex;

@@ -2,24 +2,10 @@
 <?php $get_login_url = get_option('login_url');
 $get_dashboard_url = get_option('dashboard_url');
 $get_easy_block_size = get_option('easy_block_size');
-echo $reg_with_gmail_pass = get_option('reg_with_gmail_pass', true);
+$reg_with_gmail_pass = get_option('reg_with_gmail_pass', true);
 
 if (!defined('ABSPATH'))
     exit; ?>
-<div id="message">
-    <?php 
-			if(! empty($err) ) :
-				echo '<p class="error text-danger">'.$err.'';
-			endif;
-		?>
-
-    <?php 
-			if(! empty($success) ) :
-				echo '<p class="error">'.$success.'';
-			endif;
-		?>
-</div>
-
 <?php if (!is_user_logged_in()) {
     $redirect_to = home_url($get_login_url); ?>
 <div class="easy_login">
@@ -32,7 +18,7 @@ if (!defined('ABSPATH'))
                     if ($esyregister_content) {
                         echo $esyregister_content;
                     } ?>
-                    <form method="post" id="reg-form">
+                    <form method="POST" id="reg-form">
                         <!-- <h3>Don't have an account?<br /> Create one now.</h3> -->
                         <div class="easy_row">
                             <div class="easy_column-6">
@@ -62,10 +48,7 @@ if (!defined('ABSPATH'))
                         <?php } ?>
                         <a href="<?php echo easy_get_forgot_pass_uri(); ?>" style="float:right"
                             class="forgot-btn">Forgot Password?</a>
-                        <div class="alignleft">
-                            <p><?php if($sucess != "") { echo $sucess; } ?> <?php if($error!= "") { echo $error; } ?>
-                            </p>
-                        </div>
+            
                         <button type="submit" name="btnregister" class="esylogin-btn">Create an account now</button>
                         <input type="hidden" name="task" value="register" />
 

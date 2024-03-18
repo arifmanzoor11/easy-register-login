@@ -3,6 +3,8 @@ add_action('wp_ajax_nopriv_register_user', 'register_user');
 
 function register_user() {
 $error= ''; $success = '';
+$reg_with_gmail_pass = get_option('reg_with_gmail_pass', true);
+
 global $wpdb, $PasswordHash, $current_user, $user_ID;
 if(isset($_POST['task']) && $_POST['task'] == 'register' ) {
     if ($reg_with_gmail_pass == 'on') {
@@ -16,14 +18,18 @@ if(isset($_POST['task']) && $_POST['task'] == 'register' ) {
     $username = $wpdb->escape(trim($_POST['username']));
     
     if( $email == "" || $username == "" || $first_name == "" || $last_name == "") {
-        $error= 'Please don\'t leave the required fields.';
+        echo json_encode(array('Code' => '150', 'Value' => 'Please don\'t leave the required fields.'));
+        exit;
     } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error= 'Invalid email address.';
+        echo json_encode(array('Code' => '150', 'Value' => 'Invalid email address.'));
+        exit;
     } else if(email_exists($email) ) {
-        $error= 'Email already exist.';
+        echo json_encode(array('Code' => '150', 'Value' => 'Email already exist.'));
+        exit;
     } 
     else if($password1 <> $password2 ){
-        $error= 'Password do not match.';		
+        echo json_encode(array('Code' => '150', 'Value' => 'Password do not match.'));
+        exit;
     } 
     
     else {
@@ -46,14 +52,17 @@ if(isset($_POST['task']) && $_POST['task'] == 'register' ) {
         
         $user_id = wp_insert_user($user_details);
         if( is_wp_error($user_id) ) {
-            $error= 'Error on user creation.';
+            echo json_encode(array('Code' => '150', 'Value' => 'Error on user creation.'));
+            exit;
         } else {
-            do_action('user_register', $user_id);
             notify_new_user($user_id);
-            $success = 'You\'re successfully register';
+            do_action('user_register', $user_id);
+            $user = get_userdata( $user_id );
+            echo json_encode(array('Code' => '200', 'Value' => 'You have successfully registered, and an email has been sent to '.  $user->user_email .''));
+            
+            exit;
         }
     }
 }
-
-    
+wp_die();
 }

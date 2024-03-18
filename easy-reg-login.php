@@ -2,7 +2,7 @@
 * Plugin Name: Easy Login & Register 
 * Plugin URI: http://guitarchordslyrics.com/
 * Description: Easy Register & Login hassle-free way to add user registration and login features to your website. we empowers you to effortlessly integrate secure user management into your site using simple shortcodes.
-* Version: 1.0
+* Version: 1.1
 * Author: Arif M.
 * Author URI: http://guitarchordslyrics.com/
 * License: GNU GENERAL PUBLIC LICENSE
@@ -50,7 +50,7 @@ function easy_login_load_admin_style() {
     wp_enqueue_style( 'easy-loginreg-admin' );
     wp_register_script('easy-login-admin-custom', $dir . 'admin/assets/js/easy-loginreg-admin.js' , array('jquery-core'), false, true );
     wp_enqueue_script( 'easy-login-admin-custom' );
-     wp_enqueue_media();
+    wp_enqueue_media();
     // Enqueue custom script that will interact with wp.media
     // wp_enqueue_script( 'myprefix_script', plugins_url( '/js/myscript.js' , __FILE__ ), array('jquery'), '0.1' );
  
@@ -75,6 +75,7 @@ include_once(plugin_dir_path(__FILE__) . 'inc/uri.php');
 include_once(plugin_dir_path(__FILE__) . 'inc/assign-template.php');
 include_once(plugin_dir_path(__FILE__) . 'inc/login-fun.php');
 include_once(plugin_dir_path(__FILE__) . 'views/google-auth/auth.php');
+include_once(plugin_dir_path(__FILE__) . 'inc/ajax-register.php');
 
 // create register in the admin panel.
 // admin menu
@@ -209,6 +210,6 @@ function notify_new_user( $user_id ) {
     $body .= '<p>It must include the login identifier: ' . $user->user_login . '</p>';
     $body .= '<p>And the link: ' . $url_password . '</p>';
     
-    echo $url_password;
+    // echo $url_password;
     wp_mail( $mail_to, $subject, $body, $headers );
 }
