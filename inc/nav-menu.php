@@ -64,6 +64,7 @@ if ($get_easy_use_login_shortcode) {
                 . '<div class="dropdownmenu" style="display:none">'
                 . '<ul>'
                 .  '<li><a href="/qr-nicole/create-dynamic-qr/"><i class="ph-bold ph-user"></i>&nbsp;Create Dynamic Qr</a></li>'
+                .  '<li><a href="/qr-nicole/ni/"><i class="ph-bold ph-user"></i>&nbsp;Create Static Qr</a></li>'
                 .  '<li><a href="' . get_edit_profile_url() . '"><i class="ph-bold ph-user"></i>&nbsp;Profile</a></li>'
                 .  '<li><a href="'. wp_logout_url(home_url($get_login_url)) .'"><i class="ph-bold ph-sign-out"></i>&nbsp;Sign Out</a></li>'
                 .  '</ul>'
