@@ -6,6 +6,9 @@
 // plugin uri's 
 function easy_get_login_uri() {
     $get_login_url = get_option('login_url');
+    if (empty($get_login_url)) {
+        return;
+    }
     if ($get_login_url) {
         $login_uri = home_url($get_login_url);
     }
@@ -13,6 +16,9 @@ function easy_get_login_uri() {
 }
 function easy_get_register_uri() {
     $register_url = get_option('register_url');
+    if (empty($register_url)) {
+        return;
+    }
     if ($register_url) {
         $register_uri = home_url($register_url);
     }

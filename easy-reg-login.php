@@ -41,8 +41,8 @@ function easy_scripts() {
 }
 add_action('wp_enqueue_scripts', 'easy_scripts');
 
-add_action('admin_enqueue_scripts', 'easy_login_load_admin_style');
-function easy_login_load_admin_style() {
+add_action('admin_enqueue_scripts', 'easy_login_load_admin_style_login_reg');
+function easy_login_load_admin_style_login_reg() {
     $dir = plugin_dir_url(__FILE__);
     wp_enqueue_style('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0.0');
     wp_enqueue_style('easy-login-register_url-admin');
@@ -74,8 +74,9 @@ include_once(plugin_dir_path(__FILE__) . 'inc/assign-template.php');
 include_once(plugin_dir_path(__FILE__) . 'inc/login-fun.php');
 include_once(plugin_dir_path(__FILE__) . 'views/google-auth/auth.php');
 include_once(plugin_dir_path(__FILE__) . 'views/google-auth/facebook-auth.php'); // Added Facebook auth
-include_once(plugin_dir_path(__FILE__) . 'views/google-auth/twitter-auth.php'); // Added Facebook auth
+// include_once(plugin_dir_path(__FILE__) . 'views/google-auth/twitter-auth.php'); // Added Facebook auth
 include_once(plugin_dir_path(__FILE__) . 'inc/ajax-register.php');
+
 
 // Admin menu
 add_action('admin_menu', 'easy_reg_login_menu');
