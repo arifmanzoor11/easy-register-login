@@ -65,13 +65,6 @@ function Refresh_Image(the_id) {
 
 
 
-
-
-
-
-
-
-
 jQuery(document).ready(function ($) {
     jQuery('#myprefix_media_dashboard').click(function (e) {
         e.preventDefault();
@@ -175,3 +168,9 @@ jQuery("#rowAdder").click(function () {
 jQuery("body").on("click", "#DeleteRow", function () {
     jQuery(this).parents("#row").remove();
 })
+
+
+jQuery(document).ready(function($){
+    $('.easy-loginreg-colorpick').wpColorPicker();
+});
+  
