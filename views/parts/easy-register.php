@@ -22,12 +22,12 @@ if (!defined('ABSPATH'))
                         <!-- <h3>Don't have an account?<br /> Create one now.</h3> -->
                         <div class="easy_row">
                             <div class="easy_column-6">
-                                <p><label>Last Name</label></p>
-                                <p><input class="esylogin-input" type="text" value="" name="last_name" id="last_name" /></p>
-                            </div>
-                            <div class="easy_column-6">
                                 <p><label>First Name</label></p>
                                 <p><input class="esylogin-input" type="text" value="" name="first_name" id="first_name" /></p>
+                            </div>
+                            <div class="easy_column-6">
+                                <p><label>Last Name</label></p>
+                                <p><input class="esylogin-input" type="text" value="" name="last_name" id="last_name" /></p>
                             </div>
                         </div>
                         <p><label>Email</label></p>
