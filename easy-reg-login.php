@@ -46,12 +46,16 @@ function easy_login_load_admin_style_login_reg() {
     $dir = plugin_dir_url(__FILE__);
     wp_enqueue_style('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0.0');
     wp_enqueue_style('easy-login-register_url-admin');
+
     wp_register_script('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', false, true);
     wp_enqueue_script('easy-login-register_url-admin');
+    
     wp_enqueue_style('easy-loginreg-admin', $dir . 'admin/assets/css/esy-loginreg-admin.css', false, '1.0.0');
     wp_enqueue_style('easy-loginreg-admin');
-    wp_register_script('easy-login-admin-custom', $dir . 'admin/assets/js/easy-loginreg-admin.js', array('jquery-core'), false, true);
-    wp_enqueue_script('easy-login-admin-custom');
+
+    wp_register_script('easy-loginreg_js', $dir . 'admin/assets/js/easy-loginreg-admin.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('easy-loginreg_js');
+
     wp_enqueue_media();
 }
 
@@ -252,3 +256,14 @@ function notify_new_user($user_id) {
     
     wp_mail($mail_to, $subject, $body, $headers);
 }
+
+function custom_plugin_check_admin_notice() {
+    if (!function_exists('EasyMedia')) {
+        echo '<div class="notice notice-error"><p>';
+        echo 'EasyMedia plugin is not installed. Please download and install it using the following <a href="https://github.com/arifmanzoor11/easy-media-uploader/archive/refs/heads/master.zip">link</a><br>';
+        echo 'Then activate the plugin from the WordPress admin panel.';
+        echo '</p></div>';
+    }
+}
+add_action('admin_notices', 'custom_plugin_check_admin_notice');
+
