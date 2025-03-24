@@ -30,6 +30,8 @@ if (is_wp_error($user)) {
     }
 }
 
+add_shortcode('custom_login_form', 'custom_login_form');
+
 function custom_login_form() {
 ob_start(); // Start output buffering to capture the form HTML.
 // Check if the user is already logged in.
@@ -61,8 +63,17 @@ return 'You are already logged in.';
     <img src="https://www.vyvapts.com/wp-content/uploads/loading.gif" width="25px" class="loading-img"
         style="display:none; position: absolute; margin-top: 10px; margin-left: 10px;" alt="">
     <input type="submit" class="esylogin-btn" value="Log In">
-    <?php echo do_shortcode('[google_oauth_button]') ?><br>
-    <?php echo do_shortcode('[facebook_oauth_button]') ?><br>
+    
+    <?php
+    $get_esylogin_reg_google_auth = unserialize(get_option('esylogin_reg_google_auth'));
+    if($get_esylogin_reg_google_auth) {
+        echo do_shortcode('[google_oauth_button]');
+    } ?>
+    <br>
+    <?php $get_esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_auth')); 
+    if($get_esylogin_reg_facebook_auth) {
+    echo do_shortcode('[facebook_oauth_button]'); } ?>
+    <br>
     <a class="forgot-btn" href="<?php echo wp_lostpassword_url() ?>">Forgot Password?</a>
         <?php //echo wp_lostpassword_url(); ?>
     <?php wp_nonce_field( 'ajax-login-nonce', 'security' ); ?>
