@@ -5,11 +5,10 @@ $get_esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_
 if(empty($get_esylogin_reg_facebook_auth)) {
     return;
 }
-
-
 define('FACEBOOK_APP_ID', $get_esylogin_reg_facebook_auth[0] ?? '');
 define('FACEBOOK_APP_SECRET', $get_esylogin_reg_facebook_auth[1] ?? '');
 define('FACEBOOK_REDIRECT_URI', $get_esylogin_reg_facebook_auth[2] ?? '');
+
 
 $facebookProvider = new Facebook([
     'clientId'          => FACEBOOK_APP_ID,

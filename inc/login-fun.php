@@ -62,6 +62,7 @@ return 'You are already logged in.';
         style="display:none; position: absolute; margin-top: 10px; margin-left: 10px;" alt="">
     <input type="submit" class="esylogin-btn" value="Log In">
     <?php echo do_shortcode('[google_oauth_button]') ?><br>
+    <?php echo do_shortcode('[facebook_oauth_button]') ?><br>
     <a class="forgot-btn" href="<?php echo wp_lostpassword_url() ?>">Forgot Password?</a>
         <?php //echo wp_lostpassword_url(); ?>
     <?php wp_nonce_field( 'ajax-login-nonce', 'security' ); ?>

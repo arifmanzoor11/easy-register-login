@@ -3,7 +3,7 @@
  * Plugin Name: Easy Login & Register
  * Plugin URI: http://guitarchordslyrics.com/
  * Description: Easy Register & Login hassle-free way to add user registration and login features to your website. we empowers you to effortlessly integrate secure user management into your site using simple shortcodes.
- * Version: 1.1
+ * Version: 2.1
  * Author: Arif M.
  * Author URI: http://guitarchordslyrics.com/
  * License: GNU GENERAL PUBLIC LICENSE
