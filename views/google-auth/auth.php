@@ -86,7 +86,7 @@ function google_oauth_button_shortcode() {
     ob_start();
     ?>
     <style>
-    .google-oauth-button{ width: 100%; background: #4f86ec; color: white;
+    .google-oauth-button{ width: 100%; background: #d0463b; color: white; border-radius: 5px;
         padding: 15px; display: block; text-align: center; text-decoration: none; }
     .google-oauth-button:hover{background:#3f6ec4; color:white}
     </style>
