@@ -2,13 +2,65 @@
 /**
  * Plugin Name: Easy Login & Register
  * Plugin URI: http://guitarchordslyrics.com/
- * Description: Easy Register & Login hassle-free way to add user registration and login features to your website. we empowers you to effortlessly integrate secure user management into your site using simple shortcodes.
+ * Description: This plugin provides an easy and hassle-free way to add user registration and login features to your WordPress website. 
+ *              It includes secure user management, shortcodes for login and registration, and integration with Google and Facebook authentication.
  * Version: 2.1
  * Author: Arif M.
  * Author URI: http://guitarchordslyrics.com/
  * License: GNU GENERAL PUBLIC LICENSE
- */
-
+ *
+ * Features:
+ * - Shortcodes for login and registration forms.
+ * - Integration with Google and Facebook authentication.
+ * - Customizable login and registration pages.
+ * - Admin menu for managing plugin settings.
+ * - AJAX-based user image refresh functionality.
+ * - Redirects for logged-in and non-logged-in users.
+ * - Email notifications for new user registration.
+ * - Compatibility with WooCommerce for login redirection.
+ * - Includes additional files for navigation, URI handling, and AJAX registration.
+ *
+ * Hooks and Actions:
+ * - `add_shortcode`: Registers the `[easy_qr_code_login]` shortcode.
+ * - `wp_enqueue_scripts`: Enqueues frontend scripts and styles.
+ * - `admin_enqueue_scripts`: Enqueues admin scripts and styles.
+ * - `wp_ajax_myprefix_get_image`: Handles AJAX requests for refreshing user images.
+ * - `admin_menu`: Adds admin menu and submenus for plugin settings.
+ * - `wp`: Checks user login status and redirects accordingly.
+ * - `plugin_action_links`: Adds a settings link to the plugin's action links.
+ * - `admin_notices`: Displays an admin notice if the EasyMedia plugin is not installed.
+ *
+ * Functions:
+ * - `easy_qr_code_login`: Includes the login and registration view.
+ * - `getTimeNow`: Returns a greeting based on the current time of day.
+ * - `add_sideSection`: Includes the side area view.
+ * - `easy_scripts`: Enqueues frontend scripts and styles.
+ * - `easy_login_load_admin_style_login_reg`: Enqueues admin scripts and styles.
+ * - `myprefix_get_image`: Handles AJAX requests for user image refresh.
+ * - `plugin_assets_url`: Returns the plugin's assets URL.
+ * - `easy_reg_login_menu`: Adds admin menu and submenus.
+ * - `login_menu_init`: Includes the admin menu view.
+ * - `sub_login_menu_init`: Includes the Google authentication settings view.
+ * - `sub_facebook_menu_init`: Handles Facebook authentication settings.
+ * - `add_login_check`: Redirects users based on login status and page.
+ * - `the_slug_exists`: Checks if a post slug exists.
+ * - `easy_login_links`: Adds a settings link to the plugin's action links.
+ * - `notify_new_user`: Sends an email notification to new users with login details.
+ * - `custom_plugin_check_admin_notice`: Displays an admin notice if the EasyMedia plugin is not installed.
+ *
+ * Additional Files Included:
+ * - `inc/nav-menu.php`: Handles navigation menu functionality.
+ * - `inc/uri.php`: Manages URI-related functionality.
+ * - `inc/assign-template.php`: Assigns templates for specific pages.
+ * - `inc/login-fun.php`: Contains login-related functions.
+ * - `views/google-auth/auth.php`: Handles Google authentication.
+ * - `views/google-auth/facebook-auth.php`: Handles Facebook authentication.
+ * - `inc/ajax-register.php`: Handles AJAX-based user registration.
+ * - `inc/shortcode/login-shortcode.php`: Defines the login shortcode.
+ * - `inc/shortcode/register-shortcode.php`: Defines the registration shortcode.
+ * - `inc/shortcode/forgot-pw-shortcode.php`: Defines the forgot password shortcode.
+ * - `admin/documentation/documentation-tab.php`: Displays plugin documentation in the admin panel.
+    */
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
@@ -125,8 +177,19 @@ function easy_reg_login_menu()
         'sub-facebook-menu',
         'sub_facebook_menu_init'
     );
+
+    add_submenu_page(
+        'easy-login-register', // Parent menu slug (Easy Login Register)
+        __('Auth Documentation', 'textdomain'), // Page title
+        __('Auth Documentation', 'textdomain'), // Menu title
+        'manage_options', // Capability
+        'auth_documentation', // Menu slug (same as callback function)
+        'auth_documentation' // Function to display content
+    );
+
 }
 
+include __DIR__ . '/admin/documentation/documentation-tab.php';
 function login_menu_init()
 {
     include __DIR__ . '/admin/easy-login-admin.php';
