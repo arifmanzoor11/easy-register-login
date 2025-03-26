@@ -36,34 +36,45 @@ jQuery(document).ready(function () {
             }
         })
     });
-    jQuery("#reg-form").submit(function (e) {
-        jQuery(".loading-img").show();
-        e.preventDefault();
-        var Form_Data = jQuery("#reg-form").serialize();
-        // console.log(Form_Data);
-        // return;
-        jQuery.ajax({
-            url: my_ajax_object.ajax_url,
-            type: "POST",
-            data: Form_Data + '&action=register_user',
-            success: function (data) {
-               
-                var data_Success = jQuery.parseJSON(data);
-                if (data_Success.Code == '150') {
-                    jQuery("#reg-form").after("<div class='reg-loader'>"+ data_Success.Value +"</div>");
-                    jQuery(".reg-loader").show(1000).delay(5000).hide( "fast");
+    jQuery(document).ready(function ($) {
+        $("#reg-form").on("submit", function (e) {
+            e.preventDefault();
+    
+            $(".loading-img").show(); // Show loading image
+            var formData = $(this).serialize() + "&action=register_user";
+    
+            console.log(formData); // Debugging
+    
+            $.ajax({
+                url: my_ajax_object.ajax_url,
+                type: "POST",
+                data: formData,
+                dataType: "json", // Expect JSON response
+                success: function (response) {
+                    $(".loading-img").hide(); // Hide loading image
+    
+                    $(".reg-loader").remove(); // Remove any existing messages before inserting a new one
+                    
+                    var messageClass = response.Code == "200" ? "reg-loader success" : "reg-loader error";
+                    var messageBg = response.Code == "200" ? "background: green;" : "background: red;";
+    
+                    var messageDiv = $("<div>", {
+                        class: messageClass,
+                        text: response.Value,
+                        style: messageBg,
+                    });
+    
+                    $("#reg-form").after(messageDiv);
+                    $(".reg-loader").fadeIn(1000).delay(response.Code == "200" ? 10000 : 5000).fadeOut("fast");
+                },
+                error: function (xhr, status, error) {
+                    $(".loading-img").hide(); // Hide loading image on error
+                    console.error("AJAX Error:", xhr.status, xhr.statusText, error);
                 }
-                if (data_Success.Code == '200') {
-                    jQuery("#reg-form").after("<div class='reg-loader' style='background:green'>"+ data_Success.Value +"</div>");
-                    jQuery(".reg-loader").show(1000).delay(10000).hide( "fast");
-                }
-            },
-            error: function (xhr, status, error) {
-                var errorMessage = xhr.status + ': ' + xhr.statusText;
-                console.log('Error - ' + errorMessage);
-            }
-        })
+            });
+        });
     });
+    
     
 }
 

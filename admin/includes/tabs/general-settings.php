@@ -55,8 +55,6 @@ $all_wp_pages = get_pages();
 ?>
 
 <div class="wrap">
-    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-    
     <?php 
     // Display any error or success messages
     settings_errors('custom_login_settings'); 
@@ -184,4 +182,3 @@ $all_wp_pages = get_pages();
         </p>
     </form>
 </div>
-<?php

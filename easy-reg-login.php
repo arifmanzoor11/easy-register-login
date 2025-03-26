@@ -13,43 +13,48 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-function easy_qr_code_login() {
+function easy_qr_code_login()
+{
     include __DIR__ . '/views/parts/easy-login-register.php';
 }
 add_shortcode('easy_qr_code_login', 'easy_qr_code_login');
 
-function getTimeNow() {
+function getTimeNow()
+{
     $hour = date('H');
     $dayTerm = ($hour > 17) ? "Evening" : (($hour > 12) ? "Afternoon" : "Morning");
     return "Good " . $dayTerm;
 }
 
-function add_sideSection() {
+function add_sideSection()
+{
     include __DIR__ . '/views/parts/easy-sidearea.php';
 }
 
 /**
  * Enqueue scripts and styles.
  */
-function easy_scripts() {
+function easy_scripts()
+{
     $dir = plugin_dir_url(__FILE__);
     wp_enqueue_style('easy-dynamic-plugin', $dir . 'assets/css/dynamic-css-login.css.php');
     wp_enqueue_style('easy-plugin', $dir . 'assets/css/easy-plugin.css');
-    
+
     wp_enqueue_script('easy-plugin', $dir . 'assets/js/easy-loginreg.js', array('jquery'));
     wp_localize_script('easy-plugin', 'my_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'easy_scripts');
 
 add_action('admin_enqueue_scripts', 'easy_login_load_admin_style_login_reg');
-function easy_login_load_admin_style_login_reg() {
+function easy_login_load_admin_style_login_reg()
+{
     $dir = plugin_dir_url(__FILE__);
     wp_enqueue_style('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0.0');
     wp_enqueue_style('easy-login-register_url-admin');
 
     wp_register_script('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', false, true);
     wp_enqueue_script('easy-login-register_url-admin');
-    
+
     wp_enqueue_style('easy-loginreg-admin', $dir . 'admin/assets/css/esy-loginreg-admin.css', false, '1.0.0');
     wp_enqueue_style('easy-loginreg-admin');
 
@@ -61,7 +66,8 @@ function easy_login_load_admin_style_login_reg() {
 
 // Ajax action to refresh the user image
 add_action('wp_ajax_myprefix_get_image', 'myprefix_get_image');
-function myprefix_get_image() {
+function myprefix_get_image()
+{
     if (isset($_GET['id'])) {
         $image = wp_get_attachment_image(filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT), 'medium', false, array('id' => 'myprefix-preview-image'));
         $data = array('image' => $image);
@@ -69,6 +75,11 @@ function myprefix_get_image() {
     } else {
         wp_send_json_error();
     }
+}
+
+function plugin_assets_url()
+{
+    return plugin_dir_url(__FILE__);
 }
 
 // Include additional files
@@ -80,11 +91,15 @@ include_once(plugin_dir_path(__FILE__) . 'views/google-auth/auth.php');
 include_once(plugin_dir_path(__FILE__) . 'views/google-auth/facebook-auth.php'); // Added Facebook auth
 // include_once(plugin_dir_path(__FILE__) . 'views/google-auth/twitter-auth.php'); // Added Facebook auth
 include_once(plugin_dir_path(__FILE__) . 'inc/ajax-register.php');
+include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/login-shortcode.php');
+include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/register-shortcode.php');
+include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/forgot-pw-shortcode.php');
 
 
 // Admin menu
 add_action('admin_menu', 'easy_reg_login_menu');
-function easy_reg_login_menu() {
+function easy_reg_login_menu()
+{
     add_menu_page(
         'Easy Login Register',
         'Easy Login',
@@ -112,15 +127,18 @@ function easy_reg_login_menu() {
     );
 }
 
-function login_menu_init() {
+function login_menu_init()
+{
     include __DIR__ . '/admin/easy-login-admin.php';
 }
 
-function sub_login_menu_init() {
+function sub_login_menu_init()
+{
     include __DIR__ . '/admin/includes/model/google-auth.php';
 }
 
-function sub_facebook_menu_init() {
+function sub_facebook_menu_init()
+{
     // Save settings if form submitted
     if (isset($_POST['esylogin_reg_facebook_auth_nonce']) && wp_verify_nonce($_POST['esylogin_reg_facebook_auth_nonce'], 'save_facebook_auth')) {
         $facebook_auth = [
@@ -142,16 +160,20 @@ function sub_facebook_menu_init() {
             <table class="form-table">
                 <tr>
                     <th><label for="facebook_app_id">Facebook App ID</label></th>
-                    <td><input type="text" name="facebook_app_id" id="facebook_app_id" value="<?php echo esc_attr($current_settings[0]); ?>" class="regular-text"></td>
+                    <td><input type="text" name="facebook_app_id" id="facebook_app_id"
+                            value="<?php echo esc_attr($current_settings[0]); ?>" class="regular-text"></td>
                 </tr>
                 <tr>
                     <th><label for="facebook_app_secret">Facebook App Secret</label></th>
-                    <td><input type="text" name="facebook_app_secret" id="facebook_app_secret" value="<?php echo esc_attr($current_settings[1]); ?>" class="regular-text"></td>
+                    <td><input type="text" name="facebook_app_secret" id="facebook_app_secret"
+                            value="<?php echo esc_attr($current_settings[1]); ?>" class="regular-text"></td>
                 </tr>
                 <tr>
                     <th><label for="facebook_redirect_uri">Redirect URI</label></th>
-                    <td><input type="text" name="facebook_redirect_uri" id="facebook_redirect_uri" value="<?php echo esc_attr($current_settings[2]); ?>" class="regular-text"><br>
-                        <small>Use: <?php echo esc_url(home_url('/?facebook_oauth_callback=1')); ?></small></td>
+                    <td><input type="text" name="facebook_redirect_uri" id="facebook_redirect_uri"
+                            value="<?php echo esc_attr($current_settings[2]); ?>" class="regular-text"><br>
+                        <small>Use: <?php echo esc_url(home_url('/?facebook_oauth_callback=1')); ?></small>
+                    </td>
                 </tr>
             </table>
             <?php submit_button('Save Facebook Settings'); ?>
@@ -162,7 +184,8 @@ function sub_facebook_menu_init() {
 
 // Check if the user is logged in and redirect
 add_action('wp', 'add_login_check');
-function add_login_check() {
+function add_login_check()
+{
     if (easy_get_login_uri() && easy_get_register_uri()) {
         if (is_user_logged_in()) {
             $get_login_url = get_option('login_url');
@@ -198,7 +221,8 @@ function add_login_check() {
     }
 }
 
-function the_slug_exists($post_name) {
+function the_slug_exists($post_name)
+{
     global $wpdb;
     if ($wpdb->get_row("SELECT post_name FROM wp_posts WHERE post_name = '" . $post_name . "'", 'ARRAY_A')) {
         return true;
@@ -225,7 +249,8 @@ if (easy_get_login_uri() && the_slug_exists($get_login_url)) {
 }
 
 // Plugins setting link
-function easy_login_links($plugin_actions, $plugin_file) {
+function easy_login_links($plugin_actions, $plugin_file)
+{
     $new_actions = array();
     if (basename(plugin_dir_path(__FILE__)) . '/easy-reg-login.php' === $plugin_file) {
         $new_actions['cl_settings'] = sprintf(__('<a href="%s">Settings</a>', 'comment-limiter'), esc_url(admin_url('admin.php?page=easy-login-register')));
@@ -234,7 +259,8 @@ function easy_login_links($plugin_actions, $plugin_file) {
 }
 add_filter('plugin_action_links', 'easy_login_links', 10, 2);
 
-function notify_new_user($user_id) {
+function notify_new_user($user_id)
+{
     $user = get_userdata($user_id);
     $subject = '[website] Connection details';
     $mail_from = get_bloginfo('admin_email');
@@ -253,11 +279,12 @@ function notify_new_user($user_id) {
     $body = '<p>HTML body in your own style.</p>';
     $body .= '<p>It must include the login identifier: ' . $user->user_login . '</p>';
     $body .= '<p>And the link: ' . $url_password . '</p>';
-    
+
     wp_mail($mail_to, $subject, $body, $headers);
 }
 
-function custom_plugin_check_admin_notice() {
+function custom_plugin_check_admin_notice()
+{
     if (!function_exists('EasyMedia')) {
         echo '<div class="notice notice-error"><p>';
         echo 'EasyMedia plugin is not installed. Please download and install it using the following <a href="https://github.com/arifmanzoor11/easy-media-uploader/archive/refs/heads/master.zip">link</a><br>';
@@ -266,4 +293,3 @@ function custom_plugin_check_admin_notice() {
     }
 }
 add_action('admin_notices', 'custom_plugin_check_admin_notice');
-

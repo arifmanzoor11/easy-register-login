@@ -30,8 +30,6 @@ if (is_wp_error($user)) {
     }
 }
 
-add_shortcode('custom_login_form', 'custom_login_form');
-
 function custom_login_form() {
 ob_start(); // Start output buffering to capture the form HTML.
 // Check if the user is already logged in.
@@ -60,10 +58,11 @@ return 'You are already logged in.';
         </button>
     </div>
     </p>
-    <img src="https://www.vyvapts.com/wp-content/uploads/loading.gif" width="25px" class="loading-img"
-        style="display:none; position: absolute; margin-top: 10px; margin-left: 10px;" alt="">
-    <input type="submit" class="esylogin-btn" value="Log In">
-    
+    <div style="position: relative;">
+        <img src="https://www.vyvapts.com/wp-content/uploads/loading.gif" width="25px" class="loading-img"
+            style="display:none; position: absolute;top: calc(50% + -12px);left: 10px;" alt="">
+        <input type="submit" class="esylogin-btn" value="Log In">
+    </div>
     <?php
     $get_esylogin_reg_google_auth = unserialize(get_option('esylogin_reg_google_auth'));
     if($get_esylogin_reg_google_auth) {

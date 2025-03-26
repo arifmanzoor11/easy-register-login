@@ -1,6 +1,5 @@
 <?php 
 add_action('wp_ajax_nopriv_register_user', 'register_user');
-
 function register_user() {
 $error= ''; $success = '';
 $reg_with_gmail_pass = get_option('reg_with_gmail_pass', true);

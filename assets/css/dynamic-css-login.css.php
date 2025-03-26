@@ -143,39 +143,57 @@ background: linear-gradient(45deg, <?php echo $get_easy_bg_color_1 ? $get_easy_b
 background: <?php echo $get_easy_register_url_primary ? $get_easy_register_url_primary : '#000' ?>; }
 .register-btn, .forgot-btn, .log-in-btn{color: <?php echo $get_easy_register_url_primary ? $get_easy_register_url_primary : '#000' ?>;}
 
-.esylogin-input{
-    background:<?php echo $esylogin_output[0] ?  $esylogin_output[0] : '#eee'; ?>!important;
-    border-radius:<?php echo $esylogin_output[1] ?  $esylogin_output[1] : '0px'; ?>!important;
-    padding :<?php echo $esylogin_output[2] ?  $esylogin_output[2] : '1.5rem 1.8rem'; ?>!important;
-    border-width:<?php echo $esylogin_output[3] ?  $esylogin_output[3] : '1px'; ?>!important;
-    border-color:<?php echo $esylogin_output[4] ?  $esylogin_output[4] : '#eee'; ?>!important;
-    border-style :<?php echo $esylogin_output[5] ?  $esylogin_output[5] : 'solid'; ?>!important;
-    font-size: <?php echo $esylogin_output[6] ?  $esylogin_output[6] : '1.6rem'; ?>!important;
-    color: <?php echo $esylogin_output[7] ?  $esylogin_output[7] : '#000'; ?>!important;
-    width: <?php echo $esylogin_output[8] ?  $esylogin_output[8] : '100%'; ?>!important;
+.esylogin-input {
+    background: <?php echo esc_attr(get_option('esylogin_input_bgcolor', '#eee')); ?> !important;
+    border-radius: <?php echo esc_attr(get_option('esylogin_input_border_radius', '0px')); ?> !important;
+    padding: <?php echo esc_attr(get_option('esylogin_input_padding', '1.5rem 1.8rem')); ?> !important;
+    border-width: <?php echo esc_attr(get_option('esylogin_input_border_width', '1px')); ?> !important;
+    border-color: <?php echo esc_attr(get_option('esylogin_input_bordercolor', '#eee')); ?> !important;
+    border-style: <?php echo esc_attr(get_option('esylogin_input_borderstyle', 'solid')); ?> !important;
+    font-size: <?php echo esc_attr(get_option('esylogin_input_fontsize', '1.6rem')); ?> !important;
+    font-weight: <?php echo esc_attr(get_option('esylogin_btn_fontweight', '400')); ?> !important;
+    color: <?php echo esc_attr(get_option('esylogin_input_color', '#000')); ?> !important;
+    width: <?php echo esc_attr(get_option('esylogin_input_width', '100%')); ?> !important;
     display: block;
 }
 
 .esylogin-input:focus, .esylogin-input:focus-visible, .esylogin-input:hover {
-    border-color:<?php echo $esylogin_output[0] ?  $esylogin_output[0] : '#eee'; ?>!important;
-}
-.esylogin-btn{
-    background:<?php echo $esylogin_output_btn[0] ?  $esylogin_output_btn[0] : '#eee'; ?>!important;
-    border-radius:<?php echo $esylogin_output_btn[1] ?  $esylogin_output_btn[1] : '0px'; ?>!important;
-    padding :<?php echo $esylogin_output_btn[2] ?  $esylogin_output_btn[2] : '1.5rem 1.8rem'; ?>!important;
-    border-width:<?php echo $esylogin_output_btn[3] ?  $esylogin_output_btn[3] : '1px'; ?>!important;
-    border-color:<?php echo $esylogin_output_btn[4] ?  $esylogin_output_btn[4] : '#eee'; ?>!important;
-    border-style :<?php echo $esylogin_output_btn[5] ?  $esylogin_output_btn[5] : 'solid'; ?>!important;
-    font-size: <?php echo $esylogin_output_btn[6] ?  $esylogin_output_btn[6] : '1.6rem'; ?>!important;
-    color: <?php echo $esylogin_output_btn[7] ?  $esylogin_output_btn[7] : '#000'; ?>!important;
-    width: <?php echo $esylogin_output_btn[8] ?  $esylogin_output_btn[8] : '100%'; ?>!important;
-    margin: <?php echo $esylogin_output_btn[9] ?  $esylogin_output_btn[9] : '0px'; ?>!important;
-    text-decoration: none!important;
+    border-color: <?php echo esc_attr(get_option('esylogin_input_bgcolor', '#eee')); ?> !important;
 }
 
-.esylogin-btn:hover{
-    background:<?php echo $esylogin_output_btn[10] ?  $esylogin_output_btn[10] : '#eee'; ?>!important;
-    border-color:<?php echo $esylogin_output_btn[10] ?  $esylogin_output_btn[10] : '#eee'; ?>!important;
+input.esylogin-btn {
+  background: <?php echo get_option('esylogin_btn_bgcolor', '#4363c5'); ?> !important;
+  border-radius: <?php echo get_option('esylogin_btn_border_radius', '0px'); ?> !important;
+  padding: <?php echo get_option('esylogin_btn_padding', ''); ?> !important;
+  border-width: <?php echo get_option('esylogin_btn_border_width', '1px'); ?> !important;
+  border-color: <?php echo get_option('esylogin_btn_bordercolor', '#eee'); ?> !important;
+  border-style: <?php echo get_option('esylogin_btn_borderstyle', 'solid'); ?> !important;
+  font-size: <?php echo get_option('esylogin_btn_fontsize', '1.6rem'); ?> !important;
+  font-weight: <?php echo esc_attr(get_option('esylogin_btn_fontweight', '400')); ?> !important;
+  color: <?php echo get_option('esylogin_btn_color', '#fff'); ?> !important;
+  width: <?php echo get_option('esylogin_btn_width', '100%'); ?> !important;
+  margin: <?php echo get_option('esylogin_btn_margin', ''); ?> !important;
+  text-decoration: none !important;}
+
+.esylogin-btn:hover {
+  background: <?php echo get_option('esylogin_btn_bghvrcolor', '#4363c5'); ?> !important;
+  border-color:<?php echo get_option('esylogin_btn_bghvrcolor', '#4363c5'); ?> !important;
+}
+.esyregister-btn{
+  background: <?php echo get_option('esylogin_btn_bgcolor', '#4363c5'); ?> !important;
+  border-radius: <?php echo get_option('esylogin_btn_border_radius', '0px'); ?> !important;
+  padding: <?php echo get_option('esylogin_btn_padding', ''); ?> !important;
+  border-width: <?php echo get_option('esylogin_btn_border_width', '1px'); ?> !important;
+  border-color: <?php echo get_option('esylogin_btn_bordercolor', '#eee'); ?> !important;
+  border-style: <?php echo get_option('esylogin_btn_borderstyle', 'solid'); ?> !important;
+  font-size: <?php echo get_option('esylogin_btn_fontsize', '1.6rem'); ?> !important;
+  color: <?php echo get_option('esylogin_btn_color', '#fff'); ?> !important;
+  width: <?php echo get_option('esylogin_btn_width', '100%'); ?> !important;
+  margin: <?php echo get_option('esylogin_btn_margin', ''); ?> !important;
+}
+.esyregister-btn:hover {
+  background: <?php echo get_option('esylogin_btn_bghvrcolor', '#4363c5'); ?> !important;
+  border-color:<?php echo get_option('esylogin_btn_bghvrcolor', '#4363c5'); ?> !important;
 }
 
 #snackbar.show {
@@ -221,6 +239,6 @@ background: <?php echo $get_easy_register_url_primary ? $get_easy_register_url_p
 
 button#btnToggle {
     position: absolute;
-    top: 14px;
+    top: 0px;
 }
 
