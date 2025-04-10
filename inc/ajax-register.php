@@ -15,8 +15,9 @@ if(isset($_POST['task']) && $_POST['task'] == 'register' ) {
     $last_name = $wpdb->escape(trim($_POST['last_name']));
     $email = $wpdb->escape(trim($_POST['email']));
     $username = $wpdb->escape(trim($_POST['username']));
+    $phone = $wpdb->escape(trim($_POST['phone'])); // Capture phone number
     
-    if( $email == "" || $username == "" || $first_name == "" || $last_name == "") {
+    if ($email == "" || $username == "" || $first_name == "" || $last_name == "" || $phone == "") {
         echo json_encode(array('Code' => '150', 'Value' => 'Please don\'t leave the required fields.'));
         exit;
     } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -57,6 +58,7 @@ if(isset($_POST['task']) && $_POST['task'] == 'register' ) {
             notify_new_user($user_id);
             do_action('user_register', $user_id);
             $user = get_userdata( $user_id );
+            update_user_meta($user_id, 'phone_number', $phone); 
             echo json_encode(array('Code' => '200', 'Value' => 'You have successfully registered, and an email has been sent to '.  $user->user_email .''));
             
             exit;

@@ -322,29 +322,34 @@ function easy_login_links($plugin_actions, $plugin_file)
 }
 add_filter('plugin_action_links', 'easy_login_links', 10, 2);
 
-function notify_new_user($user_id)
-{
+function notify_new_user($user_id) {
     $user = get_userdata($user_id);
-    $subject = '[website] Connection details';
+    $site_name = get_bloginfo('name'); // Get site name
+    $subject = '[' . $site_name . '] Your Account Details';
     $mail_from = get_bloginfo('admin_email');
     $mail_to = $user->user_email;
+    
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
-        'From: ' . $mail_from,
+        'From: ' . $site_name . ' <' . $mail_from . '>',
     );
 
     $key = get_password_reset_key($user);
     if (is_wp_error($key)) {
         return;
     }
+
     $url_password = network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user->user_login));
 
-    $body = '<p>HTML body in your own style.</p>';
-    $body .= '<p>It must include the login identifier: ' . $user->user_login . '</p>';
-    $body .= '<p>And the link: ' . $url_password . '</p>';
+    $body = '<h3>Welcome to ' . $site_name . '!</h3>';
+    $body .= '<p>Your account has been created successfully.</p>';
+    $body .= '<p><strong>Username:</strong> ' . $user->user_login . '</p>';
+    $body .= '<p>You can create password from here: <a href="' . esc_url($url_password) . '">Create Password</a></p>';
+    $body .= '<p>Thank you for joining us!</p>';
 
     wp_mail($mail_to, $subject, $body, $headers);
 }
+
 
 function custom_plugin_check_admin_notice()
 {
@@ -356,3 +361,29 @@ function custom_plugin_check_admin_notice()
     }
 }
 add_action('admin_notices', 'custom_plugin_check_admin_notice');
+
+
+// Add phone number field to user profile
+function add_phone_number_to_user_profile($user) { ?>
+    <h3>Extra Profile Information</h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="phone_number">Phone Number</label></th>
+            <td>
+                <input type="text" name="phone_number" id="phone_number" value="<?php echo esc_attr(get_user_meta($user->ID, 'phone_number', true)); ?>" class="regular-text" />
+            </td>
+        </tr>
+    </table>
+<?php }
+add_action('show_user_profile', 'add_phone_number_to_user_profile');
+add_action('edit_user_profile', 'add_phone_number_to_user_profile');
+
+// Save the phone number when user profile is updated
+function save_phone_number_in_profile($user_id) {
+    if (!current_user_can('edit_user', $user_id)) {
+        return false;
+    }
+    update_user_meta($user_id, 'phone_number', sanitize_text_field($_POST['phone_number']));
+}
+add_action('personal_options_update', 'save_phone_number_in_profile');
+add_action('edit_user_profile_update', 'save_phone_number_in_profile');
