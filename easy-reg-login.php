@@ -207,20 +207,35 @@ function sub_facebook_menu_init()
         $facebook_auth = [
             sanitize_text_field($_POST['facebook_app_id']),
             sanitize_text_field($_POST['facebook_app_secret']),
-            sanitize_text_field($_POST['facebook_redirect_uri'])
+            sanitize_text_field($_POST['facebook_redirect_uri']),
+            sanitize_text_field($_POST['enable_google_login']),
         ];
         update_option('esylogin_reg_facebook_auth', serialize($facebook_auth));
         echo '<div class="updated"><p>Facebook settings saved.</p></div>';
     }
 
     // Get current settings
-    $current_settings = unserialize(get_option('esylogin_reg_facebook_auth')) ?: ['', '', ''];
+    $current_settings = unserialize(get_option('esylogin_reg_facebook_auth')) ?: ['', '', '', ''];
+    
     ?>
     <div class="wrap">
         <h1>Facebook Authentication Settings</h1>
         <form method="post" action="">
             <?php wp_nonce_field('save_facebook_auth', 'esylogin_reg_facebook_auth_nonce'); ?>
             <table class="form-table">
+            <tr valign="top">
+                    <th scope="row">
+                        <label>Enable Google Login</label>
+                    </th>
+                    <td class="forminp forminp-checkbox">
+                        <input type="checkbox" 
+                               name="enable_google_login" 
+                               id="enable_google_login"
+                               value="1"
+                               <?php checked(isset($current_settings[3]) ? $current_settings[3] : '1', '1'); ?>>
+                        <label for="enable_google_login">Enable Google authentication for users</label>
+                    </td>
+                </tr>
                 <tr>
                     <th><label for="facebook_app_id">Facebook App ID</label></th>
                     <td><input type="text" name="facebook_app_id" id="facebook_app_id"

@@ -3,9 +3,13 @@ require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 use League\OAuth2\Client\Provider\Google;
 $get_esylogin_reg_google_auth = unserialize(get_option('esylogin_reg_google_auth'));
 
-if(empty($get_esylogin_reg_google_auth)) {
+// Check if Google auth is enabled before initializing
+if(empty($get_esylogin_reg_google_auth) || 
+   !isset($get_esylogin_reg_google_auth[3]) || 
+   $get_esylogin_reg_google_auth[3] !== '1') {
     return;
 }
+
 //Google OAuth2 configuration
 define('GOOGLE_CLIENT_ID', $get_esylogin_reg_google_auth[0]);
 define('GOOGLE_CLIENT_SECRET', $get_esylogin_reg_google_auth[1]);

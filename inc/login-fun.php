@@ -63,15 +63,19 @@ return 'You are already logged in.';
             style="display:none; position: absolute;top: calc(50% + -12px);left: 10px;" alt="">
         <input type="submit" class="esylogin-btn" value="Log In">
     </div>
+    
     <?php
+
     $get_esylogin_reg_google_auth = unserialize(get_option('esylogin_reg_google_auth'));
-    if($get_esylogin_reg_google_auth) {
+    $enable_google_auth = $get_esylogin_reg_google_auth[3];
+    if($get_esylogin_reg_google_auth && $enable_google_auth && $get_esylogin_reg_google_auth[1] && $get_esylogin_reg_google_auth[2]&& $get_esylogin_reg_google_auth[0]) {
         echo do_shortcode('[google_oauth_button]');
     } ?>
     <br>
     <?php $get_esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_auth')); 
-    if($get_esylogin_reg_facebook_auth) {
-    echo do_shortcode('[facebook_oauth_button]'); } ?>
+    $enable_facebook_auth = $get_esylogin_reg_facebook_auth[3];
+    if($get_esylogin_reg_facebook_auth && $enable_facebook_auth && $get_esylogin_reg_facebook_auth[1] && $get_esylogin_reg_facebook_auth[2]&& $get_esylogin_reg_facebook_auth[0]) {
+        echo do_shortcode('[facebook_oauth_button]'); } ?>  
     <br>
     <a class="forgot-btn" href="<?php echo wp_lostpassword_url() ?>">Forgot Password?</a>
         <?php //echo wp_lostpassword_url(); ?>

@@ -36,14 +36,23 @@ function login_shortcode()
         </div>
         <?php
         $get_esylogin_reg_google_auth = unserialize(get_option('esylogin_reg_google_auth'));
-        if ($get_esylogin_reg_google_auth) {
+        // Check if Google auth is enabled
+        if ($get_esylogin_reg_google_auth && 
+            isset($get_esylogin_reg_google_auth[3]) && $get_esylogin_reg_google_auth[2] && $get_esylogin_reg_google_auth[1] && $get_esylogin_reg_google_auth[0]) {
             echo do_shortcode('[google_oauth_button]');
-        } ?>
+        }
+        ?>
         <br>
-        <?php $get_esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_auth'));
-        if ($get_esylogin_reg_facebook_auth) {
+        <div style="position: relative;">
+           
+        </div>
+        <?php
+        $esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_auth'));
+        // Check if Facebook auth is enabled
+        if ($esylogin_reg_facebook_auth && $esylogin_reg_facebook_auth[3] && $esylogin_reg_facebook_auth[2] && $esylogin_reg_facebook_auth[1] && $esylogin_reg_facebook_auth[0]) {
             echo do_shortcode('[facebook_oauth_button]');
-        } ?>
+        }
+        ?>
         <br>
         <?php wp_nonce_field('ajax-login-nonce', 'security'); ?>
     </form>

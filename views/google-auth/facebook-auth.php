@@ -1,14 +1,20 @@
 <?php
 require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 use League\OAuth2\Client\Provider\Facebook;
+
 $get_esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_auth'));
-if(empty($get_esylogin_reg_facebook_auth)) {
+
+// Check if Facebook auth is enabled before initializing
+if(empty($get_esylogin_reg_facebook_auth) || 
+   !isset($get_esylogin_reg_facebook_auth[3]) || 
+   $get_esylogin_reg_facebook_auth[3] !== '1') {
     return;
 }
-define('FACEBOOK_APP_ID', $get_esylogin_reg_facebook_auth[0] ?? '');
-define('FACEBOOK_APP_SECRET', $get_esylogin_reg_facebook_auth[1] ?? '');
-define('FACEBOOK_REDIRECT_URI', $get_esylogin_reg_facebook_auth[2] ?? '');
 
+// Facebook OAuth2 configuration
+define('FACEBOOK_APP_ID', $get_esylogin_reg_facebook_auth[0]);
+define('FACEBOOK_APP_SECRET', $get_esylogin_reg_facebook_auth[1]);
+define('FACEBOOK_REDIRECT_URI', $get_esylogin_reg_facebook_auth[2]);
 
 $facebookProvider = new Facebook([
     'clientId'          => FACEBOOK_APP_ID,
