@@ -101,13 +101,15 @@ add_action('admin_enqueue_scripts', 'easy_login_load_admin_style_login_reg');
 function easy_login_load_admin_style_login_reg()
 {
     $dir = plugin_dir_url(__FILE__);
-    wp_enqueue_style('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0.0');
+    wp_enqueue_style('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '1.0.0');
     wp_enqueue_style('easy-login-register_url-admin');
 
-    wp_register_script('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', false, true);
+    wp_register_script('easy-login-register_url-admin', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',  array('jquery'), // Depends on jQuery
+    '4.1.0-rc.0',
+    true);
     wp_enqueue_script('easy-login-register_url-admin');
 
-    wp_enqueue_style('easy-loginreg-admin', $dir . 'admin/assets/css/esy-loginreg-admin.css', false, '1.0.0');
+    wp_enqueue_style('easy-loginreg-admin', $dir . 'admin/assets/css/esy-loginreg-admin.css', array(), '1.0.0');
     wp_enqueue_style('easy-loginreg-admin');
 
     wp_register_script('easy-loginreg_js', $dir . 'admin/assets/js/easy-loginreg-admin.js', array('jquery'), '1.0.0', true);
