@@ -52,7 +52,9 @@ function register_shortcode()
                 </div>
             <?php } ?>
 
-            <button type="submit" name="btnregister" class="esyregister-btn">Create an Account Now</button>
+            <button type="submit" name="btnregister" class="esyregister-btn">
+            <img style="display:none; width:20px"  class="loading-img" alt="" src="<?php echo plugin_assets_url() . 'img/loading.gif' ?>">    
+            Create an Account Now</button>
             <input type="hidden" name="task" value="register" />
         </form>
         <?php

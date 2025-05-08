@@ -49,7 +49,18 @@ function forgot_pw_shortcode()
 
                 $to = $user_magic_email;
                 $subject = 'Magic Link Request';
-                $body = 'Here is your magic link to login: <a href="' . $magic_link_url . '">' . $magic_link_url . '</a>';
+                $body = '
+                <p>Hello,</p>
+                <p>You requested a magic link to log into your account.</p>
+                <p><strong>Click the link below to log in instantly:</strong><br>
+                <a href="' . esc_url($magic_link_url) . '">' . esc_url($magic_link_url) . '</a></p>
+                <p><strong>What does this link do?</strong><br>
+                This link will automatically log you into your account without needing a password. For security, it works only once and expires shortly after use.</p>
+                <p><strong>Want to change your password?</strong><br>
+                Once logged in, go to your profile or account settings page and click on "Change Password."</p>
+                <p>If you did not request this, you can ignore this email.</p>
+                <p>Thanks</p>';
+
                 $headers = array('Content-Type: text/html; charset=UTF-8');
 
                 wp_mail($to, $subject, $body, $headers);

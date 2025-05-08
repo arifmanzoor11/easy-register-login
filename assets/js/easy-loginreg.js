@@ -36,6 +36,7 @@ jQuery(document).ready(function () {
             }
         })
     });
+    
     jQuery(document).ready(function ($) {
         $("#reg-form").on("submit", function (e) {
             e.preventDefault();
@@ -43,18 +44,16 @@ jQuery(document).ready(function () {
             $(".loading-img").show(); // Show loading image
             var formData = $(this).serialize() + "&action=register_user";
     
-            console.log(formData); // Debugging
-    
             $.ajax({
                 url: my_ajax_object.ajax_url,
                 type: "POST",
                 data: formData,
-                dataType: "json", // Expect JSON response
+                dataType: "json",
                 success: function (response) {
                     $(".loading-img").hide(); // Hide loading image
     
-                    $(".reg-loader").remove(); // Remove any existing messages before inserting a new one
-                    
+                    $(".reg-loader").remove(); // Remove any existing message
+    
                     var messageClass = response.Code == "200" ? "reg-loader success" : "reg-loader error";
                     var messageBg = response.Code == "200" ? "background: green;" : "background: red;";
     
@@ -65,15 +64,20 @@ jQuery(document).ready(function () {
                     });
     
                     $("#reg-form").after(messageDiv);
-                    $(".reg-loader").fadeIn(1000).delay(response.Code == "200" ? 10000 : 5000).fadeOut("fast");
+                    $(".reg-loader").fadeIn(500).delay(response.Code == "200" ? 3000 : 3000).fadeOut("fast", function () {
+                        if (response.Code == "200") {
+                            location.reload(); // Reload only after success
+                        }
+                    });
                 },
                 error: function (xhr, status, error) {
-                    $(".loading-img").hide(); // Hide loading image on error
+                    $(".loading-img").hide(); // Hide loading image
                     console.error("AJAX Error:", xhr.status, xhr.statusText, error);
                 }
             });
         });
     });
+    
     
     
 }

@@ -4,11 +4,16 @@
  * Plugin URI: http://guitarchordslyrics.com/
  * Description: This plugin provides an easy and hassle-free way to add user registration and login features to your WordPress website. 
  *              It includes secure user management, shortcodes for login and registration, and integration with Google and Facebook authentication.
- * Version: 2.1
+ * Version: 2.3
  * Author: Arif M.
  * Author URI: http://guitarchordslyrics.com/
  * License: GNU GENERAL PUBLIC LICENSE
  *
+ * 
+ * 
+ * Feature need adding
+ *  Add auto loggin in the admin panel 
+ * 
  * Features:
  * - Shortcodes for login and registration forms.
  * - Integration with Google and Facebook authentication.
@@ -404,3 +409,31 @@ function save_phone_number_in_profile($user_id) {
 }
 add_action('personal_options_update', 'save_phone_number_in_profile');
 add_action('edit_user_profile_update', 'save_phone_number_in_profile');
+
+
+
+add_action('init', 'prop_search_process_magic_link');
+
+function prop_search_process_magic_link() {
+    if (is_user_logged_in()) return;
+
+    if (isset($_GET['magic']) && isset($_GET['id'])) {
+        $magic = sanitize_text_field($_GET['magic']);
+        $user_id = absint($_GET['id']);
+
+        if (!$magic || !$user_id) return;
+
+        $stored_magic = get_user_meta($user_id, 'magic_link_id', true);
+
+        if ($stored_magic && hash_equals($stored_magic, $magic)) {
+            wp_set_auth_cookie($user_id, true); // Log the user in
+            delete_user_meta($user_id, 'magic_link_id'); // Invalidate the link
+
+            wp_redirect(home_url('/dashboard')); // Change to your desired page
+            exit;
+        } else {
+            wp_redirect(home_url('/forgot-password?ref=magicfail'));
+            exit;
+        }
+    }
+}
