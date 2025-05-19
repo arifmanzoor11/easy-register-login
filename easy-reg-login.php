@@ -1,71 +1,23 @@
 <?php
 /**
  * Plugin Name: Easy Login & Register
- * Plugin URI: http://guitarchordslyrics.com/
- * Description: This plugin provides an easy and hassle-free way to add user registration and login features to your WordPress website. 
- *              It includes secure user management, shortcodes for login and registration, and integration with Google and Facebook authentication.
- * Version: 2.3
+ * Plugin URI: https://waveink.co.uk/plugins/
+ * Description: A lightweight and secure WordPress plugin that simplifies user registration and login. 
+ *              It includes customizable shortcodes for login and registration forms, user-friendly interface, 
+ *              password reset, user role assignment, and OAuth login with Google and Facebook. Perfect for blogs, membership sites, or any community-driven WordPress website.
+ * Version: 2.3.1
+ * Requires at least: 6.0
+ * Tested up to: 6.8.1
+ * Requires PHP: 8.0
  * Author: Arif M.
- * Author URI: http://guitarchordslyrics.com/
- * License: GNU GENERAL PUBLIC LICENSE
- *
- * 
- * 
- * Feature need adding
- *  Add auto loggin in the admin panel 
- * 
- * Features:
- * - Shortcodes for login and registration forms.
- * - Integration with Google and Facebook authentication.
- * - Customizable login and registration pages.
- * - Admin menu for managing plugin settings.
- * - AJAX-based user image refresh functionality.
- * - Redirects for logged-in and non-logged-in users.
- * - Email notifications for new user registration.
- * - Compatibility with WooCommerce for login redirection.
- * - Includes additional files for navigation, URI handling, and AJAX registration.
- *
- * Hooks and Actions:
- * - `add_shortcode`: Registers the `[easy_qr_code_login]` shortcode.
- * - `wp_enqueue_scripts`: Enqueues frontend scripts and styles.
- * - `admin_enqueue_scripts`: Enqueues admin scripts and styles.
- * - `wp_ajax_myprefix_get_image`: Handles AJAX requests for refreshing user images.
- * - `admin_menu`: Adds admin menu and submenus for plugin settings.
- * - `wp`: Checks user login status and redirects accordingly.
- * - `plugin_action_links`: Adds a settings link to the plugin's action links.
- * - `admin_notices`: Displays an admin notice if the EasyMedia plugin is not installed.
- *
- * Functions:
- * - `easy_qr_code_login`: Includes the login and registration view.
- * - `getTimeNow`: Returns a greeting based on the current time of day.
- * - `add_sideSection`: Includes the side area view.
- * - `easy_scripts`: Enqueues frontend scripts and styles.
- * - `easy_login_load_admin_style_login_reg`: Enqueues admin scripts and styles.
- * - `myprefix_get_image`: Handles AJAX requests for user image refresh.
- * - `plugin_assets_url`: Returns the plugin's assets URL.
- * - `easy_reg_login_menu`: Adds admin menu and submenus.
- * - `login_menu_init`: Includes the admin menu view.
- * - `sub_login_menu_init`: Includes the Google authentication settings view.
- * - `sub_facebook_menu_init`: Handles Facebook authentication settings.
- * - `add_login_check`: Redirects users based on login status and page.
- * - `the_slug_exists`: Checks if a post slug exists.
- * - `easy_login_links`: Adds a settings link to the plugin's action links.
- * - `notify_new_user`: Sends an email notification to new users with login details.
- * - `custom_plugin_check_admin_notice`: Displays an admin notice if the EasyMedia plugin is not installed.
- *
- * Additional Files Included:
- * - `inc/nav-menu.php`: Handles navigation menu functionality.
- * - `inc/uri.php`: Manages URI-related functionality.
- * - `inc/assign-template.php`: Assigns templates for specific pages.
- * - `inc/login-fun.php`: Contains login-related functions.
- * - `views/google-auth/auth.php`: Handles Google authentication.
- * - `views/google-auth/facebook-auth.php`: Handles Facebook authentication.
- * - `inc/ajax-register.php`: Handles AJAX-based user registration.
- * - `inc/shortcode/login-shortcode.php`: Defines the login shortcode.
- * - `inc/shortcode/register-shortcode.php`: Defines the registration shortcode.
- * - `inc/shortcode/forgot-pw-shortcode.php`: Defines the forgot password shortcode.
- * - `admin/documentation/documentation-tab.php`: Displays plugin documentation in the admin panel.
-    */
+ * Author URI: http://waveink.co.uk/
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: easy-login-register
+ * Domain Path: /languages
+ */
+
+ 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
@@ -150,6 +102,7 @@ include_once(plugin_dir_path(__FILE__) . 'views/google-auth/auth.php');
 include_once(plugin_dir_path(__FILE__) . 'views/google-auth/facebook-auth.php'); // Added Facebook auth
 // include_once(plugin_dir_path(__FILE__) . 'views/google-auth/twitter-auth.php'); // Added Facebook auth
 include_once(plugin_dir_path(__FILE__) . 'inc/ajax-register.php');
+include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/easy_auth_shortcode.php');
 include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/login-shortcode.php');
 include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/register-shortcode.php');
 include_once(plugin_dir_path(__FILE__) . 'inc/shortcode/forgot-pw-shortcode.php');

@@ -8,13 +8,14 @@ function login_shortcode()
         // Display a message if the user is logged in.
         return 'You are already logged in.';
     } ?>
+    <h3>Login</h3>
     <form id="easy-login-form" action="" method="post">
         <p>
             <label for="username">Username:</label>
             <input class="esylogin-input" type="text" name="username" id="username" required>
         </p>
         <p>
-            <label for="password">Password:</label>
+        <label for="password">Password:</label>
         <div class="password-group">
             <input class="esylogin-input" type="password" name="password" id="txtPassword" required>
             <button type="button" id="btnToggle" class="toggle">
@@ -42,10 +43,6 @@ function login_shortcode()
             echo do_shortcode('[google_oauth_button]');
         }
         ?>
-        <br>
-        <div style="position: relative;">
-           
-        </div>
         <?php
         $esylogin_reg_facebook_auth = unserialize(get_option('esylogin_reg_facebook_auth'));
         // Check if Facebook auth is enabled

@@ -19,6 +19,7 @@ function register_shortcode()
         ?>
 
         <form method="POST" id="reg-form">
+        <h3 class="register-form-heading">Create an account</h3>
             <div class="easy_row">
                 <div class="easy_column-6">
                     <p><label for="first_name">First Name</label></p>

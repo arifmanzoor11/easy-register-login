@@ -7,24 +7,36 @@ $get_easy_use_login_shortcode = get_option('easy_use_login_shortcode');
 if ($get_easy_use_login_shortcode) {
     function easy_login_btn_func($items) {
          $esylogin_menu_btn = unserialize(get_option('esylogin_menu_btn'));
-        if (is_user_logged_in() && easy_get_dashboard_uri()) {
-            // ($esylogin_menu_btn[4]) ? $homelink = '<a href="' . easy_get_dashboard_uri() . '">' . __($esylogin_menu_btn[4]) . '</a>' : $homelink = '<a href="' . easy_get_dashboard_uri() . '">' . __('Dashboard') . '</a>' ;
+         if (is_user_logged_in() && easy_get_dashboard_uri()) {
+            // Make sure to fetch the current user
+            $current_user = wp_get_current_user();
+            $get_login_url = get_option('login_url');
+            // Create the dashboard/home link
+            if (!empty($esylogin_menu_btn[4])) {
+                $homelink = '<a href="' . esc_url(easy_get_dashboard_uri()) . '">' . esc_html__($esylogin_menu_btn[4]) . '</a>';
+            } else {
+                $homelink = '<a href="' . esc_url(easy_get_dashboard_uri()) . '">' . __('Dashboard') . '</a>';
+            }
+        
+            // Append user profile UI
             $homelink .= '<div class="profile">'
                 . '<div class="user">'
-                // . '<h3 style="text-transform:">' . $current_user->first_name .' '. $current_user->last_name . '</h3>'
-                // . '<p>'. $current_user->user_login . '</p>'
+                // Optionally show user name or login
+                //. '<h3>' . esc_html($current_user->first_name . ' ' . $current_user->last_name) . '</h3>'
+                //. '<p>' . esc_html($current_user->user_login) . '</p>'
                 . '</div>'
                 . '<div class="img-box">'
-                . '<img src="' . esc_url( get_avatar_url( $current_user->ID ) ) . '" alt="some user image">'
+                . '<img src="' . esc_url(get_avatar_url($current_user->ID)) . '" alt="User Avatar">'
                 . '</div>'
                 . '</div>'
                 . '<div class="dropdownmenu" style="display:none">'
                 . '<ul>'
-                .  '<li><a href="' . get_edit_profile_url() . '"><i class="ph-bold ph-user"></i>&nbsp;Profile</a></li>'
-                .  '<li><a href="'. wp_logout_url(home_url($get_login_url)) .'"><i class="ph-bold ph-sign-out"></i>&nbsp;Sign Out</a></li>'
-                .  '</ul>'
-                .  '</div>';    
+                . '<li><a href="' . esc_url(get_edit_profile_url()) . '"><i class="ph-bold ph-user"></i>&nbsp;Profile</a></li>'
+                . '<li><a href="' . esc_url(wp_logout_url(home_url($get_login_url))) . '"><i class="ph-bold ph-sign-out"></i>&nbsp;Sign Out</a></li>'
+                . '</ul>'
+                . '</div>';
         }
+        
         if (!is_user_logged_in() && easy_get_login_uri()) {
            ($esylogin_menu_btn[1]) ? $homelink = '<a class="easy-login-menu-btn" href="' . easy_get_login_uri() . '">' . __('Login') . '</a>' : '' ;
            ($esylogin_menu_btn[3]) ? $homelink = '<a class="easy-register-menu-btn" href="' . easy_get_register_uri() . '">' . __('Register') . '</a>' : '' ;

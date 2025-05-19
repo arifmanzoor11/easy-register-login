@@ -19,7 +19,8 @@ if (isset($_POST['save_settings'])) {
         'forgot_pass_url' => sanitize_text_field($_POST['forgot_pass_url'] ?? ''),
         'after_login_redirect' => sanitize_text_field($_POST['after_login_redirect'] ?? ''),
         'dashboard_url' => sanitize_text_field($_POST['dashboard_url'] ?? ''),
-        'reg_with_gmail_pass' => isset($_POST['reg_with_gmail_pass']) ? 'on' : 'off'
+        'reg_with_gmail_pass' => isset($_POST['reg_with_gmail_pass']) ? 'on' : 'off',
+        'magic_link_send_reset_link' => isset($_POST['magic_link_send_reset_link']) ? 'on' : 'off'
     ];
 
     // Save each non-empty option to WordPress options table
@@ -49,7 +50,7 @@ $forgot_pass_url = get_option('forgot_pass_url', '');
 $after_login_redirect = get_option('after_login_redirect', '');
 $dashboard_url = get_option('dashboard_url', '');
 $reg_with_gmail_pass = get_option('reg_with_gmail_pass', '');
-
+$magic_link_send_reset_link = get_option('magic_link_send_reset_link', '');
 // Get all WordPress pages
 $all_wp_pages = get_pages();
 ?>
@@ -173,6 +174,19 @@ $all_wp_pages = get_pages();
                         <small style="color:red">Ensure your emails are working before activating.</small>
                     </td>
                 </tr>
+
+                <tr valign="top">
+                    <th scope="row">
+                        <label>Magic Link (One-click login)/ Send Password Reset Link</label>
+                    </th>
+                    <td class="forminp forminp-text">
+                        <input type="checkbox" name="magic_link_send_reset_link" 
+                               <?php echo ($magic_link_send_reset_link == 'on') ? 'checked' : ''; ?>>
+                        <small>If the value is check it will send a magic link if unchekced it will send reset password link.</small><br>
+                        <small style="color:red">Ensure your emails are working.</small>
+                    </td>
+                </tr>
+                
             </tbody>
         </table>
 
